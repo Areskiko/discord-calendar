@@ -8,6 +8,9 @@ use serenity::model::gateway::Ready;
 use serenity::model::id::GuildId;
 use serenity::prelude::*;
 
+mod commands;
+use commands::{ping, sleep};
+
 pub struct MainHandler;
 
 #[async_trait]
@@ -15,11 +18,8 @@ impl EventHandler for MainHandler {
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
         if let Interaction::ApplicationCommand(command) = interaction {
             let content = match command.data.name.as_str() {
-                "ping" => "Hey, I'm alive!".to_string(),
-                "sleep" => {
-                    tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
-                    "I finished sleeping".to_string()
-                }
+                "ping" => ping().await,
+                "sleep" => sleep().await,
                 _ => "not implemented :(".to_string(),
             };
 
