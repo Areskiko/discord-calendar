@@ -9,7 +9,7 @@ async fn main() {
 
     // Build our client.
     let mut client = Client::builder(token, GatewayIntents::empty())
-        .event_handler(discord_calendar::CalendarHandler)
+        .event_handler(discord_calendar::MainHandler)
         .await
         .expect("Error creating client");
 
